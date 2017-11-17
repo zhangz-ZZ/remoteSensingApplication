@@ -1,0 +1,34 @@
+{
+  "name": "remoteSensingApplication",
+  "authors": [
+    "zhangz <543715239@qq.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "remoteSensingApplication.html",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "bootstrap": "^3.3.7",
+    "angular": "^1.6.6",
+    "animate.css": "^3.5.2",
+    "angular-bootstrap": "^2.5.0",
+    "angular-cookies": "^1.6.6",
+    "angular-route": "^1.6.6",
+    "ngAnimate-animate.css": "^0.1.1",
+    "angular-ui-sortable": "^0.17.2",
+    "moment": "^2.19.1",
+    "angular-deckgrid": "^0.5.0",
+    "angular-masonry": "^0.17.0",
+    "requirejs": "^2.3.5",
+    "seiyria-bootstrap-slider": "^9.9.0"
+  }
+}

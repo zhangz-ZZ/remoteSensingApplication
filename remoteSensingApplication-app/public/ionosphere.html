@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="">
+<head>
+    <meta charset="UTF-8">
+    <title>遥感应用示范</title>
+    <link rel="shortcut icon" href="logo.ico">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="lib/satelliteview/lib/openlayers/dist/ol.css">
+
+    <link rel="stylesheet" href="lib/satelliteview/css/satelliteview.css">
+    <link rel="stylesheet" href="stylesheets/ionosphere.css">
+</head>
+<body ng-controller="remoteSensingApplicationController as remoteSensingApplicationCtrl">
+
+<div id="map">
+
+</div>
+
+<!--右上角按钮组-->
+<div>
+    <ul class="sv-toolbar">
+        <li class="sv-toolbar-button" ng-class="" ng-click="" >
+            <label role="button" data-toggle="modal" data-target="#downloadModal">
+                <span class="glyphicon glyphicon-circle-arrow-down"></span>
+            </label>
+        </li>
+        <li class="sv-toolbar-button" ng-class="" ng-click="" >
+            <label role="button">
+                <span class="glyphicon glyphicon-info-sign"></span>
+            </label>
+        </li>
+        <li class="sv-toolbar-button" ng-class="" ng-click="" >
+            <label role="button">
+                <span class="glyphicon glyphicon-floppy-saved"></span>
+            </label>
+        </li>
+        <li class="sv-toolbar-button" ng-class="" ng-click="" >
+            <label role="button">
+                <span class="glyphicon glyphicon glyphicon-new-window"></span>
+            </label>
+        </li>
+        <li class="sv-toolbar-button" ng-click="" ng-show="">
+            <label role="button">
+                <span class="glyphicon glyphicon-refresh"></span>
+            </label>
+        </li>
+    </ul>
+</div>
+
+<!--下载-->
+<div class="sv-download-widget modal fade" id="downloadModal" ng-show=""
+     tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">请选择下载</h4>
+            </div>
+            <div class="modal-body">
+                <!--全部结果列表-->
+                <div class="resultList">
+                    <p>全部结果：</p>
+                    <ul class="list-group">
+                        <li class="list-group-item">产品类型：</li>
+                        <li class="list-group-item">产品模式：</li>
+                        <li class="list-group-item">产品时间：</li>
+                    </ul>
+                </div>
+                <!--详细内容列表-->
+                <div class="detailsList">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active">
+                            <label>
+                                <input type="checkbox">
+                            </label>
+                            <h4 class="list-group-item-heading">
+                                名称
+                            </h4>
+                            <p>下载</p>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <h4 class="list-group-item-heading">
+                                内容一
+                            </h4>
+                            <p class="list-group-item-text">
+                                内容一
+                            </p>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <h4 class="list-group-item-heading">
+                                内容二
+                            </h4>
+                            <p class="list-group-item-text">
+                                内容二
+                            </p>
+                        </a>
+                    </div>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active">
+                            <label>
+                                <input type="checkbox">
+                            </label>
+                            <h4 class="list-group-item-heading">
+                                名称
+                            </h4>
+                            <p>下载</p>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <h4 class="list-group-item-heading">
+                                内容一
+                            </h4>
+                            <p class="list-group-item-text">
+                                内容一
+                            </p>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <h4 class="list-group-item-heading">
+                                内容二
+                            </h4>
+                            <p class="list-group-item-text">
+                                内容二
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">批量下载</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--右上角控制按钮 end-->
+
+
+<!--功能区 start-->
+<div class="func-area-css">
+
+    <!--标题 图标 start-->
+    <div class="title-ico-css">
+        <div class="row">
+            <img class="col-xs-3" src="images/logo1.png" height="80px"/>
+            <h1 class="col-xs-9">电离层检测遥感应用示范</h1>
+        </div>
+    </div>
+    <!--标题 图标  end-->
+
+    <!--功能 start-->
+    <div class="func-css" ng-class="">
+
+        <!--菜单 start-->
+        <ul class="nav nav-tabs real-time-list" role="tablist">
+            <li class="real-time-Data" role="presentation" ng-class="">
+                <a href ng-click="">
+                    <span class="glyphicon glyphicon-oil"></span> 实时数据
+                </a>
+            </li>
+            <li class="real-time-Overview" role="presentation" ng-class="">
+                <!--<a href ng-click="WorldviewCtrl.selectTab('Events')">-->
+                <a href ng-click="">
+                    <span class="glyphicon glyphicon-th-list"></span> 实时总览
+                </a>
+             </li>
+            <li class="func-css-scaling" role="presentation" ng-class="">
+                <!--<a href ng-click="WorldviewCtrl.selectTab('Events')">-->
+                <a href ng-click="" class="func-css-scaling-a">
+                    <span class="glyphicon glyphicon-menu-up"></span>
+                </a>
+            </li>
+        </ul>
+        <!--菜单 end-->
+
+        <!--列表 start-->
+        <div class="whiteNight" ng-show="">
+            <h5 style="margin-left: 5px">白天</h5>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <span class="glyphicon glyphicon-arrow-right"></span>
+                    L1级数据
+                </li>
+                <li class="list-group-item">
+                    <span class="glyphicon glyphicon-arrow-right"></span>
+                    L2级数据
+                </li>
+            </ul>
+            <h5 style="margin-left: 5px">黑夜</h5>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <span class="glyphicon glyphicon-arrow-right"></span>
+                    L1级数据
+                </li>
+                <li class="list-group-item">
+                    <span class="glyphicon glyphicon-arrow-right"></span>
+                    L2级数据
+                </li>
+            </ul>
+        </div>
+        <!--列表 end-->
+
+        <!--foot end-->
+    </div>
+    <!--功能 end-->
+
+</div>
+<!--功能区 end-->
+
+<!--实时数据展示-->
+<div class="realTimeData-Presentation">
+    <img src="images/bg.png">
+</div>
+
+<!--实时总览展示-->
+<div class="realTimeOverviewPresentation">
+    <div class="realTimeOverviewBOX">
+        <div class="realTimeOverview-title">
+            <p>L1数据</p>
+        </div>
+        <div class="realTimeOverview-photo">
+            <img src="images/a.png">
+        </div>
+        <div class="realTimeOverview-photo">
+            <img src="images/a.png">
+        </div>
+        <div class="realTimeOverview-photo">
+            <img src="images/a.png">
+        </div>
+    </div>
+    <div class="realTimeOverviewBOX">
+        <div class="realTimeOverview-title">
+            <p>L2数据</p>
+        </div>
+        <div class="realTimeOverview-photo">
+            <img src="images/a.png">
+        </div>
+        <div class="realTimeOverview-photo">
+            <img src="images/a.png">
+        </div>
+        <div class="realTimeOverview-photo">
+            <img src="images/a.png">
+        </div>
+    </div>
+</div>
+
+<!--轨道工具栏-->
+<div class="orbital-tools">
+    <div class="orbital-list-start"></div>
+    <div class="orbital-list">
+        <div class="orbital-list-title">
+            <p>轨道一</p>
+            <!--
+            正常的class   regular
+            异常的class   abnormality
+            -->
+            <span class="regular">正常</span>
+        </div>
+        <div class="orbital-list-fun">
+            <p>概率：<span>XXX</span></p>
+            <form role="form">
+                <div class="form-group">
+                    <!--<label for="name">图像区域</label>-->
+                    <select class="form-control">
+                        <option>图像区域1</option>
+                        <option>图像区域2</option>
+                        <option>图像区域3</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="orbital-list">
+        <div class="orbital-list-title">
+            <p>轨道一</p>
+            <!--
+            正常的class   regular
+            异常的class   abnormality
+            -->
+            <span class="regular">正常</span>
+        </div>
+        <div class="orbital-list-fun">
+            <p>概率：<span>XXX</span></p>
+            <form role="form">
+                <div class="form-group">
+                    <!--<label for="name">图像区域</label>-->
+                    <select class="form-control">
+                        <option>图像区域1</option>
+                        <option>图像区域2</option>
+                        <option>图像区域3</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="orbital-list">
+        <div class="orbital-list-title">
+            <p>轨道一</p>
+            <!--
+            正常的class   regular
+            异常的class   abnormality
+            -->
+            <span class="regular">正常</span>
+        </div>
+        <div class="orbital-list-fun">
+            <p>概率：<span>XXX</span></p>
+            <form role="form">
+                <div class="form-group">
+                    <!--<label for="name">图像区域</label>-->
+                    <select class="form-control">
+                        <option>图像区域1</option>
+                        <option>图像区域2</option>
+                        <option>图像区域3</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="orbital-list">
+        <div class="orbital-list-title">
+            <p>轨道一</p>
+            <!--
+            正常的class   regular
+            异常的class   abnormality
+            -->
+            <span class="regular">正常</span>
+        </div>
+        <div class="orbital-list-fun">
+            <p>概率：<span>XXX</span></p>
+            <form role="form">
+                <div class="form-group">
+                    <!--<label for="name">图像区域</label>-->
+                    <select class="form-control">
+                        <option>图像区域1</option>
+                        <option>图像区域2</option>
+                        <option>图像区域3</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="orbital-list-drag"></div>
+    <div class="orbital-list-end">
+        <span class="glyphicon glyphicon-menu-hamburger"></span>
+    </div>
+</div>
+
+<!--layer菜单模态框 start-->
+<div class="modal fade" id="layerMenu" style="z-index: 3000">
+    <div class="modal-dialog" style="width: 857px; height: 880px">
+        <div class="modal-content">
+            <!--标题 start-->
+            <div class="modal-header dialog-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <div class="row">
+                    <div class="col-xs-1">
+                        <span class="glyphicon glyphicon-search search-layer-btn"
+                              ng-click="WorldviewCtrl.eyeClick()"></span>
+                    </div>
+                    <input class="col-xs-3 search-input" placeholder="Search"/>
+                </div>
+            </div>
+            <!--标题 end-->
+
+            <!--内容 start-->
+            <div class="modal-body dialog-body" ng-show="WorldviewCtrl.layerMenuType === 'Tile'"
+                 style="max-height: 600px;overflow-y:auto;">
+                <ul class="nav nav-tabs" role="tablist" style="margin-left: 5px; margin-right: 13px">
+                    <li ng-repeat="tabGroup in WorldviewCtrl.tabGroups" role="presentation"
+                        ng-class="{active: WorldviewCtrl.isSelectedTab_LayerMenuModal(tabGroup)}">
+                        <a href class="tab-font" ng-click="WorldviewCtrl.selectTab_LayerMenuModal(tabGroup)">
+                            {{tabGroup.typeName}}
+                        </a>
+                    </li>
+                </ul>
+                <ul class="flex-container" style="padding: 0px 5px 0px 5px;">
+                    <li>
+                        <div class="POSItem dn-bounce" style="background-color: #212121;">
+                            <h4 class="layergroup">常用</h4>
+                            <ul class="layerlist" style="padding-left: 10px;">
+                                <li ng-repeat="layer in WorldviewCtrl.currentTabGroup.frequentlyLayers"
+                                    style="list-style:none;"
+                                    ng-click="WorldviewCtrl.selectLayerItem(layer, {'name': '常用', 'layers': WorldviewCtrl.currentTabGroup.frequentlyLayers, 'type': WorldviewCtrl.currentTabGroup.type})">
+                                    <p>
+                                        <a style="color: #e2e2e2; font-weight: 500; font-size: 1.1em" href>
+                                            {{layer.layerName}}
+                                        </a>
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li ng-repeat="item in WorldviewCtrl.currentTabGroup.allLayGroups">
+                        <div class="POSItem dn-bounce" ng-class="{'dn-bounce':true}">
+                            <img class="background-img" src="" ng-src="{{item.pictureUrl}}"/>
+                            <div class="background-mask"></div>
+                            <h4 class="layergroup">{{item.name}}</h4>
+                            <ul class="layerlist" style="padding-left: 10px;">
+                                <li ng-repeat="layer in item.layers | subLayerItemList" style="list-style:none;"
+                                    ng-click="WorldviewCtrl.selectLayerItem(layer, item)">
+                                    <p>
+                                        <a style="color: #e2e2e2; font-weight: 500; font-size: 1.1em" href>
+                                            {{layer.layerName}}
+                                        </a>
+                                    </p>
+                                </li>
+                                <li ng-show="item.layers.length > 5" style="list-style:none;"
+                                    ng-click="WorldviewCtrl.selectLayerItem('', item)">
+                                    <p>
+                                        <a style="color: #e2e2e2; font-weight: 700; font-size: 1.1em" href>
+                                            ···
+                                        </a>
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-body dialog-body" ng-show="WorldviewCtrl.layerMenuType === 'Collapse'"
+                 style="max-height: 600px;overflow-y:auto;">
+                <ol class="breadcrumb" style="background-color: #c1c1c1; margin-bottom: 5px; padding-bottom: 0px;">
+                    <li><a ng-click="WorldviewCtrl.layerMenuType = 'Tile'">产品分类</a></li>
+                    <li><a>{{WorldviewCtrl.currentGroup.name}}</a></li>
+                </ol>
+                <div class="panel-group" id="layer-accordion" role="tablist" aria-multiselectable="true">
+                    <div ng-repeat="layer in WorldviewCtrl.currentGroup.layers" class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title"
+                                ng-click="WorldviewCtrl.selectLayerItem(layer, WorldviewCtrl.currentGroup)">
+                                <a data-toggle="collapse" data-parent="#layer-accordion" href="#{{layer.layerID}}"
+                                   aria-expanded="true" aria-controls="collapseOne">
+                                    {{layer.layerName}}
+                                </a>
+                                <p class="sub-name" style="margin-bottom: 0px;">{{layer.instString}}</p>
+                            </h4>
+                        </div>
+                        <div id="{{layer.layerID}}" class="panel-collapse collapse"
+                             ng-class="{'in': layer.layerName === WorldviewCtrl.currentLayer.layerName}"
+                             role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-xs-3 layer-accordion-content">
+                                    <ul class="nav nav-pills nav-stacked" style="padding-left: 0px;" role="tablist">
+                                        <li ng-repeat="inst in layer.group.instGroupList"
+                                            class="layer-accordion-content-instlist" role="presentation"
+                                            ng-class="{'active': WorldviewCtrl.isInstSelected(inst.instName)}">
+                                            <a ng-click="WorldviewCtrl.selectInstonAboveLayer(inst)">{{inst.instName}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-9 layer-accordion-content" style="margin-top: 12px"
+                                     ng-show="WorldviewCtrl.currentInst !== undefined">
+                                    <ul style="padding-left: 0px;">
+                                        <li ng-repeat="project in WorldviewCtrl.currentInst.projectList"
+                                            class="layer-accordion-content-projectlist">
+                                            <p ng-click="WorldviewCtrl.addThisProject(project)">
+                                                    <span ng-class="{'glyphicon': true, 'glyphicon-check': project.isSelected === true, 'glyphicon-unchecked': project.isSelected === false}"
+                                                          style="margin-left: 3px"></span>
+                                                &nbsp&nbsp{{project.projectName}}
+                                            </p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--内容 end-->
+        </div>
+    </div>
+</div>
+<!--layer菜单模态框 end-->
+
+
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+<script type="text/javascript" src="bower_components/ngAnimate-animate.css/animate.js"></script>
+<script type="text/javascript" src="bower_components/angular-ui-sortable/sortable.js"></script>
+<script type="text/javascript" src="bower_components/moment/moment.js"></script>
+<script type="text/javascript" src="bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+
+<!-- satelliteview引用 start -->
+<script type="text/javascript" src="lib/satelliteview/lib/openlayers/dist/ol.js"></script>
+<script type="text/javascript" src="lib/satelliteview/js/openlayer-opt.js"></script>
+<!--<script type="text/javascript" src="lib/satelliteview/js/satelliteview.js"></script>-->
+<!-- satelliteview引用 end -->
+
+<!--Palette 部分引用-->
+<script type="text/javascript" src="lib/palette/dist/Palette.js"></script>
+
+<script type="text/javascript" src="javascripts/ionosphere.js"></script>
+
+</body>
+
+
+<script>
+    function _initMap() {
+        //根据配置初始化底图
+        Shinetek.OpenlayerOpt.init("http://10.24.10.95/IMAGEL2/ACI/20171105221500/");
+    }
+    _initMap();
+</script>
